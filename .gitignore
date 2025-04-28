@@ -172,3 +172,33 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+---
+
+## 🛡️ `.gitignore`
+
+```gitignore
+# Ignore virtual environment folders
+venv/
+.env
+
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+
+# Ignore config keys
+config/api_keys.py
+config/*.json
+
+# Ignore output data
+data/output/
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore IDE settings
+.vscode/
+.idea/
