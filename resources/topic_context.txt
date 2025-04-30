@@ -1,0 +1,23 @@
+← describes your niche + allowed themes
+
+Main Topic Area: NDIS therapy in Australia
+
+Allowed Blog Themes:
+- Emotional regulation for autistic children
+- Positive parenting for neurodivergent kids
+- Tools, visual supports, and therapeutic techniques
+- Collaboration with schools and educators
+- Understanding sensory needs and PDA
+- Occupational therapy for kids and adults
+- Speech pathology for kids and adults
+- Physiotherapy for kids and adults
+- Specialised therapy services
+- Vehicle modifications for disability
+- Mealtimes and dysphagia support services
+- Assistive technology
+- Augmentative and alternative communication (AAC)
+
+Do NOT generate content about:
+- ABA therapy
+- Cure-based language
+- General parenting tips outside the neurodivergent context
