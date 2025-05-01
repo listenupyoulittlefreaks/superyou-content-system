@@ -1,45 +1,32 @@
 # content_generation/publisher.py
 
 import requests
-import os
 import base64
-from dotenv import load_dotenv
 
-# Load environment variables
-load_dotenv()
-wp_site = os.getenv("WP_SITE")
-wp_user = os.getenv("WP_USER")
-wp_app_password = os.getenv("WP_APP_PASSWORD")
-
-def publish_post(wp_site, wp_user, wp_app_password, title, content, status='draft'):
+def publish_post(wp_site, wp_user, wp_app_password, title, content, status="draft"):
+    url = f"{wp_site}/wp-json/wp/v2/posts"
     credentials = f"{wp_user}:{wp_app_password}"
-    token = base64.b64encode(credentials.encode('utf-8')).decode('utf-8')
+    token = base64.b64encode(credentials.encode()).decode()
 
     headers = {
-        'Authorization': f'Basic {token}',
-        'Content-Type': 'application/json',
-        'User-Agent': 'SmartContentSystem/1.0'
+        "Authorization": f"Basic {token}",
+        "Content-Type": "application/json"
     }
 
-    post = {
-        'title': title,
-        'content': content,
-        'status': status
+    data = {
+        "title": title,
+        "content": content,
+        "status": status
     }
 
-    try:
-        response = requests.post(
-            f"{wp_site}/wp-json/wp/v2/posts",
-            headers=headers,
-            json=post
-        )
+    response = requests.post(url, json=data, headers=headers)
 
-        if response.status_code == 201:
-            print("✅ Post published successfully!")
-            print("Post URL:", response.json().get("link"))
-        else:
-            print(f"❌ Failed to publish. Status code: {response.status_code}")
-            print("Response:", response.content)
-
-    except Exception as e:
-        print(f"❌ Error publishing post: {e}")
+    if response.status_code in [200, 201]:
+        post = response.json()
+        print("✅ Post published successfully!")
+        print("Post URL:", post.get("link"))
+        return post.get("link")
+    else:
+        print(f"❌ Failed to publish. Status code: {response.status_code}")
+        print("Response:", response.content)
+        return None
