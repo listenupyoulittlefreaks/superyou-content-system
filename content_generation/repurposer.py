@@ -1,35 +1,34 @@
-# content_generation/repurposer.py
-
-import openai
 import os
-from dotenv import load_dotenv
+from openai import OpenAI
 
-load_dotenv()
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-def repurpose_blog(post_text):
-    try:
-        client = openai.OpenAI(api_key=OPENAI_API_KEY)
+def repurpose_blog(blog_post):
+    if not blog_post:
+        return None
 
-        prompt = f"""
-You are a digital marketing assistant for a disability services provider. Repurpose the following blog post into:
+    prompt = f"""
+You are a content repurposing assistant for an NDIS therapy provider. Take the following blog post and:
 
-1. A social media post (at least 200 words) suitable for LinkedIn or Instagram, with a helpful, informative tone and appropriate hashtags.
-2. An email snippet with a subject line and short paragraph (100–150 words), plus a clear call to action to read the full blog.
+1. Write a 200-word social media post that highlights its value to readers. Use an encouraging, inclusive tone.
+2. Write a short email newsletter version including a subject line and 2–3 sentence preview.
+3. Start each section with a clear label: SOCIAL MEDIA POST: and EMAIL: respectively.
 
 BLOG POST:
-{post_text}
+{blog_post}
 """
 
+    try:
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": prompt}],
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": "You help therapists repurpose content for social and email."},
+                {"role": "user", "content": prompt}
+            ],
             temperature=0.7,
-            max_tokens=800
+            max_tokens=1000
         )
-
-        return response.choices[0].message.content.strip()
-
+        return (response.choices[0].message.content or "").strip()
     except Exception as e:
-        print("❌ Error during repurposing:", e)
+        print("❌ Error repurposing blog post:", e)
         return None
