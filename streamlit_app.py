@@ -1,4 +1,4 @@
-# dashboard.py
+# streamlit_app.py
 
 import streamlit as st
 import os
@@ -13,7 +13,7 @@ from content_generation.notion_logger import create_notion_entry
 from dotenv import load_dotenv
 
 load_dotenv()
-st.set_page_config(page_title="Superyou AI Content Engine", layout="wide")
+st.set_page_config(page_title="Superyou AI Dashboard", layout="wide")
 
 # Load logo and display header
 logo_path = "SUPERYOU Brand PURPLE_smallv4.png"
@@ -22,9 +22,9 @@ if os.path.exists(logo_path):
     with col_logo:
         st.image(Image.open(logo_path), width=50)
     with col_title:
-        st.markdown("<h1 style='color:#37215A;'>Superyou AI Content Engine Dashboard</h1>", unsafe_allow_html=True)
+        st.markdown("<h1 style='color:#37215A;'>Superyou AI Content System Dashboard</h1>", unsafe_allow_html=True)
 else:
-    st.markdown("<h1 style='color:#37215A;'>Superyou AI Content Engine Dashboard</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='color:#37215A;'>Superyou AI Content System Dashboard</h1>", unsafe_allow_html=True)
 
 output_dir = "data/output"
 image_dir = "data/images"
@@ -55,15 +55,15 @@ if run_generate and user_prompt:
     )
 
     with open(os.path.join(output_dir, "generated_post.txt"), "w") as f:
-        f.write(generated)
+        f.write(generated or "")
     with open(os.path.join(output_dir, "optimized_post.txt"), "w") as f:
-        f.write(optimized)
+        f.write(optimized or "")
     with open(os.path.join(output_dir, "repurposed_post.txt"), "w") as f:
-        f.write(repurposed)
+        f.write(repurposed or "")
     with open(os.path.join(output_dir, "brief.json"), "w") as f:
         json.dump(brief, f, indent=2)
     with open(os.path.join(output_dir, "automation_status.txt"), "w") as f:
-        f.write(post_url or "Failed to publish")
+        f.write(post_url or "")
 
     # Parse email and social sections
     if "Email:" in repurposed:
