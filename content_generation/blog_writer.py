@@ -1,7 +1,6 @@
 # content_generation/blog_writer.py
 
-from openai import OpenAI
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+import openai
 import os
 from dotenv import load_dotenv
 
@@ -27,7 +26,7 @@ def generate_blog_post(brief):
         client = openai.OpenAI(api_key=OPENAI_API_KEY)
 
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4",
             messages=[
                 {"role": "user", "content": prompt}
             ],
