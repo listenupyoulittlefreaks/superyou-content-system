@@ -18,12 +18,6 @@ from content_generation.post_optimizer import optimize_post
 from content_generation.repurposer import repurpose_blog
 from content_generation.publisher import publish_post
 
-# Clear session state on refresh if ?reset=true
-if st.query_params.get("reset"):
-    st.session_state.clear()
-
-st.set_page_config(page_title="Superyou AI Content System Dashboard")
-
 st.markdown(
     "<h1 style='color: #37215A;'>Superyou AI Content System Dashboard</h1>",
     unsafe_allow_html=True,
